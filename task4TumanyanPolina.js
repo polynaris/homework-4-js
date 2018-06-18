@@ -10,18 +10,23 @@ function smallest(...numArray) {
 largest(2, 0.1, -5, 100, 3);
 smallest(2, 0.1, -5, 100, 3);
 
-// #### 2) Write function `transform` that will transform array of numbers to array of functions 
-// that will return value from a base array.
-
-// ##### Example:
-// `const baseArray = [10, 20, 30, 40, 50];`  
-// `const newArray = transform(baseArray);`  
-// `newArray[3](); // should return 40`  
-// `newArray[4](); // should return 50`  
+// #### 2) Write function `transform` 
 
 function transform(arr) {
 
+    if (Array.isArray(arr)) {
+        return arr.map(num =>
+            function() {
+                return num;
+            }
+        );
+    }
 }
+
+const baseArray = [10, 20, 30, 40, 50];
+const newArray = transform(baseArray);
+console.log(newArray[3]());
+console.log(newArray[4]());
 
 
 
@@ -53,3 +58,15 @@ function countDown(num) {
 
 }
 countDown(3);
+
+// #### 5) Write a polyfill for a .bind() function and save it in `Function.prototype.myBind()`. `myBind()` should work in an exact same way as the usual bind() - take context as a first parameter and the list of arguments separated by comma.   
+// Hint: play with the function in Function.prototype and see what this points to inside it.
+// Your code should look like:
+// `Function.prototype.myBind = function () { `  
+// `  // your code here `  
+// `}`  
+
+// ### Example:
+// `function addPropToNumber(number) { return this.prop + number; }`  
+// `var bound = addPropToNumber.myBind({ prop: 9 });`  
+// `bound(1)  // 10`
