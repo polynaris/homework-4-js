@@ -29,8 +29,6 @@ console.log(newArray[3]());
 console.log(newArray[4]());
 
 
-
-
 // 3) Write function `sum`. 
 
 function sum(...arr) {
@@ -47,17 +45,19 @@ sum(1, 3, 5, 7);
 
 // 4) Write function `countDown`. 
 
+
 function countDown(num) {
-    let arr = [];
-    let max = num;
-    for (let i = 0; i <= max; i++) {
-        arr[i] = num;
-        num--;
-    }
-    return arr;
+    var intId = setInterval(function() {
+        console.log(num);
+        if (--num < 0) {
+            clearInterval(intId);
+        }
+    }, 1000);
+
 
 }
-countDown(3);
+countDown(3); // 3 2 1 0
+
 
 // #### 5) Write a polyfill for a .bind() function and save it in `Function.prototype.myBind()`. `myBind()` should work in an exact same way as the usual bind() - take context as a first parameter and the list of arguments separated by comma.   
 // Hint: play with the function in Function.prototype and see what this points to inside it.
