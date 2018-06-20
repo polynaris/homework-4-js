@@ -32,19 +32,18 @@ console.log(newArray[4]());
 // 3) Write function `sum`. 
 
 function sum(...arr) {
-    let summ = 0;
+    let result = 0;
     if (arr.length === 1) {
-        summ += arr[0];
+        result += arr[0];
     } else {
-        summ = arr.shift() + sum(...arr)
+        result = arr.shift() + sum(...arr)
     }
-    return summ;
+    return result;
 }
 
 sum(1, 3, 5, 7);
 
 // 4) Write function `countDown`. 
-
 
 function countDown(num) {
     var intId = setInterval(function() {
@@ -53,20 +52,23 @@ function countDown(num) {
             clearInterval(intId);
         }
     }, 1000);
-
-
 }
 countDown(3); // 3 2 1 0
 
 
-// #### 5) Write a polyfill for a .bind() function and save it in `Function.prototype.myBind()`. `myBind()` should work in an exact same way as the usual bind() - take context as a first parameter and the list of arguments separated by comma.   
-// Hint: play with the function in Function.prototype and see what this points to inside it.
-// Your code should look like:
-// `Function.prototype.myBind = function () { `  
-// `  // your code here `  
-// `}`  
+// #### 5) Write a polyfill for a .bind() function 
 
-// ### Example:
-// `function addPropToNumber(number) { return this.prop + number; }`  
-// `var bound = addPropToNumber.myBind({ prop: 9 });`  
-// `bound(1)  // 10`
+Function.prototype.myBind = function(context) {
+    var self = this;
+    var bindArgs = [].slice.call(arguments, 2);
+    return function() {
+        var thisArgs = [].slice.call(arguments);
+        return self.apply(context, bindArgs.concat(thisArgs));
+    }
+};
+
+function addPropToNumber(number) {
+    return this.prop + number;
+}
+var bound = addPropToNumber.myBind({ prop: 9 });
+console.log(bound(1)); // 10
